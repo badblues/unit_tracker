@@ -16,7 +16,10 @@ namespace App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            MemMarkerRepository repository = new MemMarkerRepository();
+            Controller controller = new Controller(repository);
+            MainWindow mainWindow = new MainWindow(controller);
+            Application.Run(mainWindow);
         }
     }
 }
