@@ -31,6 +31,9 @@
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.gMap = new GMap.NET.WindowsForms.GMapControl();
             this.NewMarkerButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -48,6 +51,9 @@
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.label3);
+            this.splitContainer.Panel2.Controls.Add(this.label2);
+            this.splitContainer.Panel2.Controls.Add(this.label1);
             this.splitContainer.Panel2.Controls.Add(this.NewMarkerButton);
             this.splitContainer.Size = new System.Drawing.Size(1264, 681);
             this.splitContainer.SplitterDistance = 920;
@@ -55,6 +61,7 @@
             // 
             // gMap
             // 
+            this.gMap.AllowDrop = true;
             this.gMap.Bearing = 0F;
             this.gMap.CanDragMap = true;
             this.gMap.EmptyTileColor = System.Drawing.Color.Navy;
@@ -64,7 +71,7 @@
             this.gMap.Location = new System.Drawing.Point(3, 3);
             this.gMap.MarkersEnabled = true;
             this.gMap.MaxZoom = 32;
-            this.gMap.MinZoom = 4;
+            this.gMap.MinZoom = 2;
             this.gMap.MouseWheelZoomEnabled = true;
             this.gMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
             this.gMap.Name = "gMap";
@@ -90,6 +97,33 @@
             this.NewMarkerButton.UseVisualStyleBackColor = true;
             this.NewMarkerButton.Click += new System.EventHandler(this.AddMarkerButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(79, 73);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(79, 149);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(82, 193);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "label3";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -101,6 +135,7 @@
             this.Text = "UNIT TRACKER";
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
+            this.splitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -112,6 +147,9 @@
         private System.Windows.Forms.SplitContainer splitContainer;
         private GMap.NET.WindowsForms.GMapControl gMap;
         private System.Windows.Forms.Button NewMarkerButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

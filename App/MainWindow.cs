@@ -1,6 +1,9 @@
-﻿using GMap.NET.WindowsForms;
+﻿using GMap.NET;
+using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using System;
+using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace App
@@ -13,14 +16,31 @@ namespace App
         {
             InitializeComponent();
             this.controller = controller;
-            gMap.ShowCenter = false;
+            gMap.ShowCenter = true;
             gMap.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             gMap.Position = new GMap.NET.PointLatLng(55.01, 82.55);
             gMap.Overlays.Add(gMapMarkers);
+            gMap.MouseDown += GMap_MouseDown;
+            gMap.DragDrop += GMap_DragDrop;
+            gMap.DragEnter += GMap_DragEnter;
+            gMap.MouseMove += GMap_MouseMove;
         }
 
-        private void gMap_Load(object sender, System.EventArgs e)
+        private void GMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            double lat = gMap.FromLocalToLatLng(e.X, e.Y).Lat;
+            double lng = gMap.FromLocalToLatLng(e.X, e.Y).Lng;
+            label1.Text = $"lat = {lat}, lng = {lng}\n x = {e.X}, y = {e.Y}";
+            label3.Text = $"lat = {gMap.Position.Lat}, lng = {gMap.Position.Lng}";
+        }
+
+        private void GMap_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void gMap_Load(object sender, EventArgs e)
         {
             foreach (Marker marker in controller.GetMarkers())
             {
@@ -28,14 +48,39 @@ namespace App
             }   
         }
 
+        private void GMap_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+            foreach (GMapMarker marker in gMapMarkers.Markers)
+            {
+                if (marker.IsMouseOver)
+                {
+                    gMap.DoDragDrop(marker, DragDropEffects.Move);
+                    return;
+                }
+            }
+        }
+
+        private void GMap_DragDrop(object sender, DragEventArgs e)
+        {
+            GMapMarker marker = (GMapMarker)e.Data.GetData(typeof(GMarkerGoogle));
+            if (marker != null)
+            {
+                Point window_point = gMap.PointToClient(new Point(e.X, e.Y));
+                PointLatLng point = gMap.FromLocalToLatLng(window_point.X, window_point.Y);
+                marker.Position = point;
+            }
+        }
+
         private void PlaceMarker(Marker marker)
         {
-            GMarkerGoogle mapMarker = new GMarkerGoogle(new GMap.NET.PointLatLng(marker.Latitude, marker.Longitude), GMarkerGoogleType.red);
+            GMarkerGoogle mapMarker = new GMarkerGoogle(new PointLatLng(marker.Latitude, marker.Longitude), GMarkerGoogleType.red);
             mapMarker.ToolTip = new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(mapMarker);
             gMapMarkers.Markers.Add(mapMarker);
         }
 
-        private void AddMarkerButton_Click(object sender, System.EventArgs e)
+        private void AddMarkerButton_Click(object sender, EventArgs e)
         {
             Marker marker = controller.AddMarker(gMap.Position.Lat, gMap.Position.Lng);
             PlaceMarker(marker);
