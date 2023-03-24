@@ -1,4 +1,4 @@
-﻿namespace App
+﻿namespace UnitTracker
 {
     partial class MainWindow
     {
@@ -30,10 +30,9 @@
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.gMap = new GMap.NET.WindowsForms.GMapControl();
-            this.NewMarkerButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.NewMarkerButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -51,7 +50,6 @@
             // 
             // splitContainer.Panel2
             // 
-            this.splitContainer.Panel2.Controls.Add(this.label3);
             this.splitContainer.Panel2.Controls.Add(this.label2);
             this.splitContainer.Panel2.Controls.Add(this.label1);
             this.splitContainer.Panel2.Controls.Add(this.NewMarkerButton);
@@ -87,16 +85,6 @@
             this.gMap.Zoom = 4D;
             this.gMap.Load += new System.EventHandler(this.gMap_Load);
             // 
-            // NewMarkerButton
-            // 
-            this.NewMarkerButton.Location = new System.Drawing.Point(82, 240);
-            this.NewMarkerButton.Name = "NewMarkerButton";
-            this.NewMarkerButton.Size = new System.Drawing.Size(184, 194);
-            this.NewMarkerButton.TabIndex = 0;
-            this.NewMarkerButton.Text = "NEW MARKER";
-            this.NewMarkerButton.UseVisualStyleBackColor = true;
-            this.NewMarkerButton.Click += new System.EventHandler(this.AddMarkerButton_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -106,23 +94,24 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
+            // NewMarkerButton
+            // 
+            this.NewMarkerButton.Location = new System.Drawing.Point(82, 240);
+            this.NewMarkerButton.Name = "NewMarkerButton";
+            this.NewMarkerButton.Size = new System.Drawing.Size(184, 25);
+            this.NewMarkerButton.TabIndex = 0;
+            this.NewMarkerButton.Text = "NEW MARKER";
+            this.NewMarkerButton.UseVisualStyleBackColor = true;
+            this.NewMarkerButton.Click += new System.EventHandler(this.AddMarkerButton_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(79, 149);
+            this.label2.Location = new System.Drawing.Point(79, 311);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(82, 193);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "label3";
             // 
             // MainWindow
             // 
@@ -149,7 +138,6 @@
         private System.Windows.Forms.Button NewMarkerButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -3,10 +3,11 @@ using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using System;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
+using UnitTracker.Controllers;
+using UnitTracker.Domain;
 
-namespace App
+namespace UnitTracker
 {
     public partial class MainWindow : Form
     {
@@ -32,7 +33,7 @@ namespace App
             double lat = gMap.FromLocalToLatLng(e.X, e.Y).Lat;
             double lng = gMap.FromLocalToLatLng(e.X, e.Y).Lng;
             label1.Text = $"lat = {lat}, lng = {lng}\n x = {e.X}, y = {e.Y}";
-            label3.Text = $"lat = {gMap.Position.Lat}, lng = {gMap.Position.Lng}";
+            label2.Text = controller.GetMarkersAsText();
         }
 
         private void GMap_DragEnter(object sender, DragEventArgs e)
@@ -70,6 +71,7 @@ namespace App
                 Point window_point = gMap.PointToClient(new Point(e.X, e.Y));
                 PointLatLng point = gMap.FromLocalToLatLng(window_point.X, window_point.Y);
                 marker.Position = point;
+                controller.MoveMarker((Guid)marker.Tag, point.Lat, point.Lng);
             }
         }
 
@@ -77,6 +79,7 @@ namespace App
         {
             GMarkerGoogle mapMarker = new GMarkerGoogle(new PointLatLng(marker.Latitude, marker.Longitude), GMarkerGoogleType.red);
             mapMarker.ToolTip = new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(mapMarker);
+            mapMarker.Tag = marker.Id;
             gMapMarkers.Markers.Add(mapMarker);
         }
 

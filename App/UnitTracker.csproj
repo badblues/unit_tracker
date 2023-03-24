@@ -86,16 +86,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMarkerRepository.cs" />
+    <Compile Include="Persistence\Interfaces\IMarkerRepository.cs" />
     <Compile Include="Marker.cs" />
-    <Compile Include="Controller.cs" />
+    <Compile Include="Controllers\Controller.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="MemMarkerRepository.cs" />
+    <Compile Include="Persistence\MemMarkerRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainWindow.resx">

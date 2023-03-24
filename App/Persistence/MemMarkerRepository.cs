@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnitTracker.Domain;
+using UnitTracker.Persistence.Interfaces;
 
-namespace App
+namespace UnitTracker.Persistence
 {
     public class MemMarkerRepository : IMarkerRepository
     {
@@ -9,7 +11,7 @@ namespace App
 
         public MemMarkerRepository()
         {
-            Marker marker = new Marker() { Latitude = 55.01, Longitude = 82.55 };
+            Marker marker = new Marker() { Id = Guid.NewGuid(), Latitude = 55.01, Longitude = 82.55 };
             markers.Add(marker);
         }
 
@@ -24,7 +26,7 @@ namespace App
             markers.Remove(marker);
         }
 
-        public Marker GetMarkers(Guid id)
+        public Marker GetMarker(Guid id)
         {
             return markers.Find(x => x.Id == id);
         }
