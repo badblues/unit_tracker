@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using App.Persistence;
+using System;
 using System.Windows.Forms;
+using UnitTracker.Controllers;
+using UnitTracker.Persistence;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace UnitTracker
 {
@@ -16,6 +17,8 @@ namespace UnitTracker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            String connString = "Data Source =; Initial Catalog = unit_tracker; User ID = unit_tracker_admin; Password = admin; TrustServerCertificate = True";
+            DbMarkerRepository dbRep = new DbMarkerRepository(connString);
             MemMarkerRepository repository = new MemMarkerRepository();
             Controller controller = new Controller(repository);
             MainWindow mainWindow = new MainWindow(controller);

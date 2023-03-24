@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System;
+using UnitTracker.Domain;
 
 namespace UnitTracker.Persistence.Interfaces
 {
