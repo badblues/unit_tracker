@@ -17,8 +17,8 @@ namespace UnitTracker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            String connString = "Data Source =; Initial Catalog = unit_tracker; User ID = unit_tracker_admin; Password = admin; TrustServerCertificate = True";
-            DbMarkerRepository repository = new DbMarkerRepository(connString);
+            DbSettings settings = new DbSettings();
+            DbMarkerRepository repository = new DbMarkerRepository(settings.ConnectionString);
             Controller controller = new Controller(repository);
             MainWindow mainWindow = new MainWindow(controller);
             Application.Run(mainWindow);

@@ -17,50 +17,54 @@ namespace UnitTracker
         {
             InitializeComponent();
             this.controller = controller;
+            //Map settings
             gMap.ShowCenter = true;
             gMap.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-            gMap.Position = new GMap.NET.PointLatLng(55.01, 82.55);
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            gMap.Position = new PointLatLng(55.01, 82.55);
             gMap.Overlays.Add(gMapMarkers);
             gMap.MouseDown += GMap_MouseDown;
             gMap.DragDrop += GMap_DragDrop;
             gMap.DragEnter += GMap_DragEnter;
-            gMap.MouseMove += GMap_MouseMove;
-        }
+            foreach (Marker marker in controller.GetMarkers())
+            {
+                PlaceMarker(marker);
+            }
+        } 
 
-        private void GMap_MouseMove(object sender, MouseEventArgs e)
+        private void GMap_MouseDown(object sender, MouseEventArgs e)
         {
-            double lat = gMap.FromLocalToLatLng(e.X, e.Y).Lat;
-            double lng = gMap.FromLocalToLatLng(e.X, e.Y).Lng;
-            label1.Text = $"lat = {lat}, lng = {lng}\n x = {e.X}, y = {e.Y}";
-            label2.Text = controller.GetMarkersAsText();
+            if (e.Button == MouseButtons.Left)
+            {
+                foreach (GMapMarker marker_ in gMapMarkers.Markers)
+                {
+                    if (marker_.IsMouseOver)
+                    {
+                        gMap.DoDragDrop(marker_, DragDropEffects.Move);
+                        return;
+                    }
+                }
+                PointLatLng point = gMap.FromLocalToLatLng(e.X, e.Y);
+                Marker marker = controller.AddMarker(point.Lat, point.Lng);
+                PlaceMarker(marker);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                foreach (GMapMarker marker_ in gMapMarkers.Markers)
+                {
+                    if (marker_.IsMouseOver)
+                    {
+                        controller.DeleteMarker((Guid)marker_.Tag);
+                        gMapMarkers.Markers.Remove(marker_);
+                        return;
+                    }
+                }
+            }
         }
 
         private void GMap_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
-        }
-
-        private void gMap_Load(object sender, EventArgs e)
-        {
-            foreach (Marker marker in controller.GetMarkers())
-            {
-                PlaceMarker(marker);
-            }   
-        }
-
-        private void GMap_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-                return;
-            foreach (GMapMarker marker in gMapMarkers.Markers)
-            {
-                if (marker.IsMouseOver)
-                {
-                    gMap.DoDragDrop(marker, DragDropEffects.Move);
-                    return;
-                }
-            }
         }
 
         private void GMap_DragDrop(object sender, DragEventArgs e)
@@ -71,7 +75,7 @@ namespace UnitTracker
                 Point window_point = gMap.PointToClient(new Point(e.X, e.Y));
                 PointLatLng point = gMap.FromLocalToLatLng(window_point.X, window_point.Y);
                 marker.Position = point;
-                controller.MoveMarker((Guid)marker.Tag, point.Lat, point.Lng);
+                controller.UpdateMarker((Guid)marker.Tag, point.Lat, point.Lng);
             }
         }
 
@@ -81,12 +85,6 @@ namespace UnitTracker
             mapMarker.ToolTip = new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(mapMarker);
             mapMarker.Tag = marker.Id;
             gMapMarkers.Markers.Add(mapMarker);
-        }
-
-        private void AddMarkerButton_Click(object sender, EventArgs e)
-        {
-            Marker marker = controller.AddMarker(gMap.Position.Lat, gMap.Position.Lng);
-            PlaceMarker(marker);
         }
     }
 }

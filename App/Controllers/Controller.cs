@@ -25,7 +25,7 @@ namespace UnitTracker.Controllers
             return marker;
         }
 
-        public void MoveMarker(Guid id, double lat, double lng)
+        public void UpdateMarker(Guid id, double lat, double lng)
         {
             Marker marker = new Marker() { Id = id, Latitude = lat, Longitude = lng };
             repository.UpdateMarker(marker);
@@ -34,17 +34,6 @@ namespace UnitTracker.Controllers
         public void DeleteMarker(Guid id)
         {
             repository.DeleteMarker(id);
-        }
-
-        public String GetMarkersAsText()
-        {
-            string res = "";
-            foreach (Marker marker in repository.GetMarkers())
-            {
-                res += $"id = {marker.Id}\nlat = {marker.Latitude}, lng = {marker.Longitude}\n";
-            }
-            return res;
-
         }
     }
 }

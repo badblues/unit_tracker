@@ -16,7 +16,6 @@ namespace App.Persistence
         {
             connection = new SqlConnection(connectionString);
             connection.Open();
-            MessageBox.Show(connection.State.ToString());            
         }
 
         public void CreateMarker(Marker marker)
