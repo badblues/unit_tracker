@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnitTracker.Domain;
-using UnitTracker.Persistence;
+using UnitTracker.Persistence.Interfaces;
 
 namespace UnitTracker.Controllers
 {
     public class Controller
     {
-        private MemMarkerRepository repository;
-        public Controller(MemMarkerRepository repository)
+        private IMarkerRepository repository;
+        public Controller(IMarkerRepository repository)
         {
             this.repository = repository;
         }
